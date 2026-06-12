@@ -52,10 +52,10 @@ export default function ContactPage() {
             initial="hidden"
             animate="show"
             style={{ perspective: 1000 }}
-            className="w-full text-center flex flex-col items-center px-4 overflow-hidden"
+            className="w-full text-center flex flex-col items-center px-4"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-white to-white/20 mb-8 flex flex-col items-center justify-center overflow-hidden py-4">
-              <div className="flex overflow-hidden">
+            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] 2xl:text-[160px] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-white to-white/20 mb-8 flex flex-col items-center justify-center overflow-y-hidden py-4">
+              <div className="flex overflow-y-hidden">
                 {"LET'S".split("").map((char, index) => (
                   <motion.span
                     key={`l-${index}`}
@@ -66,7 +66,7 @@ export default function ContactPage() {
                   </motion.span>
                 ))}
               </div>
-              <div className="flex overflow-hidden mt-2">
+              <div className="flex overflow-y-hidden mt-2">
                 {"CREATE.".split("").map((char, index) => (
                   <motion.span
                     key={`c-${index}`}
