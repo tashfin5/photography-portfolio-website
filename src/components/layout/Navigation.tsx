@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useTransition } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useSearchParams, usePathname } from "next/navigation";
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Bodoni_Moda } from "next/font/google";
 import Magnetic from "@/components/animations/Magnetic";
+import { Loader2 } from "lucide-react";
 
 const bodoni = Bodoni_Moda({ subsets: ["latin"], weight: ["400", "700", "900"] });
 
@@ -22,6 +23,9 @@ export default function Navigation() {
   const [categories, setCategories] = useState<Category[]>([]);
   const searchParams = useSearchParams();
   const pathname = usePathname();
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const currentCategory = searchParams.get("category");
 
   useEffect(() => {
@@ -46,6 +50,16 @@ export default function Navigation() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, slug: string | null, isContact = false) => {
+    e.preventDefault();
+    setPendingSlug(isContact ? 'contact' : (slug || 'all'));
+    startTransition(() => {
+      if (isContact) router.push('/contact');
+      else if (!slug) router.push('/');
+      else router.push(`/?category=${slug}`);
+    });
+  };
 
   const isAllActive = pathname === "/" && !currentCategory;
   const isContactActive = pathname === "/contact";
@@ -74,46 +88,52 @@ export default function Navigation() {
 
           {/* Desktop Nav - Categories */}
           <nav className="hidden xl:flex items-center gap-x-6 gap-y-2 flex-wrap justify-end flex-1">
-            <Link
+            <a
               href="/"
+              onClick={(e) => handleNav(e, null)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1",
+                "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
                 isAllActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
               All
+              {isPending && pendingSlug === 'all' && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
               {isAllActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
-            </Link>
+            </a>
 
             {categories.map((cat) => {
               const isActive = pathname === "/" && currentCategory === cat.slug;
               return (
-                <Link
+                <a
                   key={cat._id}
                   href={`/?category=${cat.slug}`}
+                  onClick={(e) => handleNav(e, cat.slug)}
                   className={cn(
-                    "text-sm font-medium transition-colors relative py-1",
+                    "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
                     isActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
                   )}
                 >
                   {cat.name}
+                  {isPending && pendingSlug === cat.slug && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
                   {isActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
-                </Link>
+                </a>
               );
             })}
 
             <div className="w-px h-4 bg-white/20 mx-2" />
 
-            <Link
+            <a
               href="/contact"
+              onClick={(e) => handleNav(e, null, true)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1",
+                "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
                 isContactActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
               Contact
+              {isPending && pendingSlug === 'contact' && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
               {isContactActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
-            </Link>
+            </a>
           </nav>
 
           {/* Mobile Toggle */}
@@ -158,16 +178,20 @@ export default function Navigation() {
                     transition={{ delay: 0.2, ease: "easeOut" }}
                   >
                     <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Portfolio</p>
-                    <Link
+                    <a
                       href="/"
                       className={cn(
-                        "text-3xl sm:text-4xl font-medium transition-colors block mb-6",
+                        "text-3xl sm:text-4xl font-medium transition-colors mb-6 flex items-center gap-4",
                         !currentCategory ? "text-brand-200" : "text-white/60 hover:text-white"
                       )}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={(e) => {
+                        handleNav(e, null);
+                        setMobileMenuOpen(false);
+                      }}
                     >
                       All Works
-                    </Link>
+                      {isPending && pendingSlug === 'all' && <Loader2 className="w-5 h-5 animate-spin text-brand-200" />}
+                    </a>
                   </motion.div>
 
                   <div className="space-y-4 pl-4 border-l border-white/10">
@@ -178,19 +202,23 @@ export default function Navigation() {
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: i * 0.05 + 0.3, ease: "easeOut" }}
                       >
-                        <Link
+                        <a
                           href={`/?category=${cat.slug}`}
                           className={cn(
-                            "text-xl sm:text-2xl font-medium transition-colors block relative",
+                            "text-xl sm:text-2xl font-medium transition-colors relative flex items-center gap-3",
                             currentCategory === cat.slug ? "text-brand-200" : "text-white/60 hover:text-white"
                           )}
-                          onClick={() => setMobileMenuOpen(false)}
+                          onClick={(e) => {
+                            handleNav(e, cat.slug);
+                            setMobileMenuOpen(false);
+                          }}
                         >
                           {currentCategory === cat.slug && (
                             <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-full bg-brand-200" />
                           )}
                           {cat.name}
-                        </Link>
+                          {isPending && pendingSlug === cat.slug && <Loader2 className="w-4 h-4 animate-spin text-brand-200" />}
+                        </a>
                       </motion.div>
                     ))}
                   </div>
@@ -203,13 +231,17 @@ export default function Navigation() {
                   className="pt-8 border-t border-white/10 mt-8"
                 >
                   <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Get in Touch</p>
-                  <Link
+                  <a
                     href="/contact"
-                    className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors block"
-                    onClick={() => setMobileMenuOpen(false)}
+                    className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors flex items-center gap-4"
+                    onClick={(e) => {
+                      handleNav(e, null, true);
+                      setMobileMenuOpen(false);
+                    }}
                   >
                     Contact
-                  </Link>
+                    {isPending && pendingSlug === 'contact' && <Loader2 className="w-5 h-5 animate-spin text-brand-200" />}
+                  </a>
                 </motion.div>
 
             </div>
