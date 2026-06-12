@@ -1,10 +1,10 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, AnimatePresence, useInView } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useInView, Variants } from "framer-motion";
 import { X } from "lucide-react";
 
-const charVariants = {
+const charVariants: Variants = {
   hidden: { opacity: 0, y: 50, rotateX: -90 },
   show: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", stiffness: 70, damping: 12 } }
 };

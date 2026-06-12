@@ -1,7 +1,7 @@
 "use client";
 
 import Navigation from "@/components/layout/Navigation";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import Magnetic from "@/components/animations/Magnetic";
 
@@ -28,7 +28,7 @@ const textContainerVariants = {
   }
 };
 
-const charVariants = {
+const charVariants: Variants = {
   hidden: { opacity: 0, y: 50, rotateX: -90 },
   show: { opacity: 1, y: 0, rotateX: 0, transition: { type: "spring", stiffness: 100, damping: 10 } }
 };
