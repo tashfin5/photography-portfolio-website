@@ -81,7 +81,7 @@ export default function Navigation() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center justify-center",
-          scrolled ? "py-4 bg-[#0a0a0a]/40 backdrop-blur-3xl border-b border-white/5 shadow-2xl" : "py-8 bg-transparent border-b border-transparent"
+          scrolled ? "py-4 bg-dark-100/60 backdrop-blur-2xl border-b border-brand-200/20 shadow-2xl shadow-black/50" : "py-8 bg-transparent border-b border-transparent"
         )}
       >
         <div className="w-full max-w-[1600px] px-6 md:px-12 flex items-center justify-between gap-12">
@@ -201,87 +201,87 @@ export default function Navigation() {
           >
             <div className="w-full max-w-sm mx-auto space-y-8 my-auto">
 
-                <div className="space-y-6">
-                  <motion.div
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.2, ease: "easeOut" }}
-                  >
-                    <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Portfolio</p>
-                    <a
-                      href="/"
-                      className={cn(
-                        "text-3xl sm:text-4xl font-medium transition-colors mb-6 relative flex items-center w-fit",
-                        !currentCategory ? "text-brand-200" : "text-white/60 hover:text-white"
-                      )}
-                      onClick={(e) => handleNav(e, null)}
-                    >
-                      <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
-                        All Works
-                      </span>
-                      {isPending && pendingSlug === 'all' && (
-                        <div className="absolute inset-0 flex items-center justify-start">
-                          <Loader2 className="w-6 h-6 animate-spin text-brand-200" />
-                        </div>
-                      )}
-                    </a>
-                  </motion.div>
-
-                  <div className="space-y-4 pl-4 border-l border-white/10">
-                    {categories.map((cat, i) => (
-                      <motion.div
-                        key={cat._id}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05 + 0.3, ease: "easeOut" }}
-                      >
-                        <a
-                          href={`/?category=${cat.slug}`}
-                          className={cn(
-                            "text-xl sm:text-2xl font-medium transition-colors relative flex items-center w-fit",
-                            currentCategory === cat.slug ? "text-brand-200" : "text-white/60 hover:text-white"
-                          )}
-                          onClick={(e) => handleNav(e, cat.slug)}
-                        >
-                          {currentCategory === cat.slug && (
-                            <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-full bg-brand-200" />
-                          )}
-                          <span className={cn("transition-opacity duration-200", isPending && pendingSlug === cat.slug ? "opacity-0" : "opacity-100")}>
-                            {cat.name}
-                          </span>
-                          {isPending && pendingSlug === cat.slug && (
-                            <div className="absolute inset-0 flex items-center justify-start">
-                              <Loader2 className="w-5 h-5 animate-spin text-brand-200" />
-                            </div>
-                          )}
-                        </a>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-
+              <div className="space-y-6">
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: categories.length * 0.05 + 0.4, ease: "easeOut" }}
-                  className="pt-8 border-t border-white/10 mt-8"
+                  transition={{ delay: 0.2, ease: "easeOut" }}
                 >
-                  <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Get in Touch</p>
+                  <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Portfolio</p>
                   <a
-                    href="/contact"
-                    className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors relative flex items-center w-fit"
-                    onClick={(e) => handleNav(e, null, true)}
+                    href="/"
+                    className={cn(
+                      "text-3xl sm:text-4xl font-medium transition-colors mb-6 relative flex items-center w-fit",
+                      !currentCategory ? "text-brand-200" : "text-white/60 hover:text-white"
+                    )}
+                    onClick={(e) => handleNav(e, null)}
                   >
-                    <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'contact' ? "opacity-0" : "opacity-100")}>
-                      Contact
+                    <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
+                      All Works
                     </span>
-                    {isPending && pendingSlug === 'contact' && (
+                    {isPending && pendingSlug === 'all' && (
                       <div className="absolute inset-0 flex items-center justify-start">
                         <Loader2 className="w-6 h-6 animate-spin text-brand-200" />
                       </div>
                     )}
                   </a>
                 </motion.div>
+
+                <div className="space-y-4 pl-4 border-l border-white/10">
+                  {categories.map((cat, i) => (
+                    <motion.div
+                      key={cat._id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05 + 0.3, ease: "easeOut" }}
+                    >
+                      <a
+                        href={`/?category=${cat.slug}`}
+                        className={cn(
+                          "text-xl sm:text-2xl font-medium transition-colors relative flex items-center w-fit",
+                          currentCategory === cat.slug ? "text-brand-200" : "text-white/60 hover:text-white"
+                        )}
+                        onClick={(e) => handleNav(e, cat.slug)}
+                      >
+                        {currentCategory === cat.slug && (
+                          <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-full bg-brand-200" />
+                        )}
+                        <span className={cn("transition-opacity duration-200", isPending && pendingSlug === cat.slug ? "opacity-0" : "opacity-100")}>
+                          {cat.name}
+                        </span>
+                        {isPending && pendingSlug === cat.slug && (
+                          <div className="absolute inset-0 flex items-center justify-start">
+                            <Loader2 className="w-5 h-5 animate-spin text-brand-200" />
+                          </div>
+                        )}
+                      </a>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: categories.length * 0.05 + 0.4, ease: "easeOut" }}
+                className="pt-8 border-t border-white/10 mt-8"
+              >
+                <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Get in Touch</p>
+                <a
+                  href="/contact"
+                  className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors relative flex items-center w-fit"
+                  onClick={(e) => handleNav(e, null, true)}
+                >
+                  <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'contact' ? "opacity-0" : "opacity-100")}>
+                    Contact
+                  </span>
+                  {isPending && pendingSlug === 'contact' && (
+                    <div className="absolute inset-0 flex items-center justify-start">
+                      <Loader2 className="w-6 h-6 animate-spin text-brand-200" />
+                    </div>
+                  )}
+                </a>
+              </motion.div>
 
             </div>
           </motion.div>
