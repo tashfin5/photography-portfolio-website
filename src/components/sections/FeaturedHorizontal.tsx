@@ -86,9 +86,9 @@ export default function FeaturedHorizontal({ photos }: { photos: any[] }) {
           {/* Title Block - Pushing deeper into the right so sliding photos disappear correctly */}
           {/* Title Block - Pushing deeper into the right so sliding photos disappear correctly */}
           <div className="pl-6 md:pl-12 shrink-0 pr-16 md:pr-32 z-10 relative h-full flex flex-col justify-center">
-            {/* Background layer with smooth horizontal and vertical fading so it blends perfectly into the orange background */}
+            {/* Background layer with vertical fading so there are no sharp edges when scrolling past the section */}
             <div 
-              className="absolute inset-0 bg-[linear-gradient(to_right,#0a0a0a_30%,transparent_100%)] -z-10"
+              className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a] via-60% to-transparent -z-10"
               style={{ 
                 WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)",
                 maskImage: "linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%)" 
