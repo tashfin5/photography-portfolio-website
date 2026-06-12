@@ -4,8 +4,10 @@ export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    // Default hardcoded credentials
-    if (username === 'admin' && password === 'admin') {
+    const validUsername = process.env.ADMIN_USERNAME || 'admin';
+    const validPassword = process.env.ADMIN_PASSWORD || 'tonmoy123';
+
+    if (username === validUsername && password === validPassword) {
       const response = NextResponse.json({ success: true });
       
       // Set HTTP-only cookie for simple auth
