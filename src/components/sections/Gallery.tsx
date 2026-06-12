@@ -157,10 +157,16 @@ export default function Gallery({ photos }: { photos: any[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4 }}
             onClick={closeLightbox}
-            className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/95 backdrop-blur-2xl p-4 md:p-12 cursor-zoom-out"
+            className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-12 cursor-zoom-out overflow-hidden"
           >
+            {/* Immersive Background */}
+            <div className="absolute inset-0 bg-[#0a0a0a] pointer-events-none">
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,120,0,0.25)_0%,rgba(10,10,10,1)_80%)] blur-[120px]"></div>
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,100,0,0.15)_0%,rgba(10,10,10,0)_60%)] blur-[120px]"></div>
+            </div>
+
             <button 
               onClick={(e) => { e.stopPropagation(); closeLightbox(); }}
               className="absolute top-6 right-6 p-3 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors backdrop-blur-md z-50 cursor-pointer"
@@ -169,23 +175,32 @@ export default function Gallery({ photos }: { photos: any[] }) {
             </button>
 
             <motion.div 
-              initial={{ scale: 0.95, y: 20 }}
+              initial={{ scale: 0.9, y: 20 }}
               animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-              transition={{ duration: 0.4, type: "spring", bounce: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
               className="relative w-full h-full flex flex-col items-center justify-center"
             >
+              {/* Dynamic Reflection Shadow */}
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <img
+                  src={selectedPhoto.imageUrl}
+                  alt=""
+                  className="max-w-full max-h-[85vh] object-contain blur-[80px] opacity-70 scale-105 -translate-y-4"
+                />
+              </div>
+
               <motion.img
                 layoutId={`photo-${selectedPhoto._id}`}
                 src={selectedPhoto.imageUrl}
                 alt={selectedPhoto.title}
-                className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
+                className="relative z-10 max-w-full max-h-[85vh] object-contain rounded-lg shadow-[0_20px_60px_rgba(0,0,0,0.8)]"
               />
-              <div className="mt-6 text-center">
-                <p className="text-brand-200 text-sm font-mono tracking-widest uppercase mb-2">
+              <div className="mt-8 text-center relative z-20">
+                <p className="text-brand-200 text-sm font-mono tracking-widest uppercase mb-2 drop-shadow-md">
                   {selectedPhoto.category?.name}
                 </p>
-                <h3 className="text-white text-2xl font-light tracking-wide">
+                <h3 className="text-white text-3xl font-light tracking-wide drop-shadow-xl">
                   {selectedPhoto.title}
                 </h3>
               </div>
