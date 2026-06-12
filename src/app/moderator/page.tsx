@@ -50,10 +50,11 @@ function SortableCategory({ c, editingCatId, editCatName, setEditCatName, handle
   );
 }
 
-function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhotoTitle, setEditPhotoTitle, editPhotoCategory, setEditPhotoCategory, handleUpdatePhoto, setEditingPhotoId, handleDeletePhoto, deletingPhotoId }: any) {
+function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhotoTitle, setEditPhotoTitle, editPhotoCategory, setEditPhotoCategory, handleUpdatePhoto, setEditingPhotoId, handleDeletePhoto, deletingPhotoId, updatingPhotoId }: any) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: p._id });
   const style = { transform: CSS.Transform.toString(transform), transition };
   const isDeleting = deletingPhotoId === p._id;
+  const isUpdating = updatingPhotoId === p._id;
 
   return (
     <div ref={setNodeRef} style={style} className={`flex flex-col rounded-xl overflow-hidden relative group h-full ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
@@ -75,10 +76,11 @@ function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhoto
           <div className="flex gap-2">
             <button 
               onClick={() => handleUpdatePhoto(p._id, { isFeatured: !p.isFeatured })}
-              className={`p-2 bg-black/50 rounded backdrop-blur-md transition-colors ${p.isFeatured ? 'text-yellow-400' : 'text-white/50 hover:text-yellow-200'}`}
+              disabled={isUpdating}
+              className={`p-2 bg-black/50 rounded backdrop-blur-md transition-colors ${p.isFeatured ? 'text-yellow-400' : 'text-white/50 hover:text-yellow-200'} disabled:opacity-50`}
               title={p.isFeatured ? "Remove from Featured" : "Add to Featured Works"}
             >
-              <Star className="w-4 h-4" fill={p.isFeatured ? "currentColor" : "none"} />
+              {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Star className="w-4 h-4" fill={p.isFeatured ? "currentColor" : "none"} />}
             </button>
             <button 
               onClick={() => {
@@ -92,8 +94,8 @@ function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhoto
             </button>
             <button 
               onClick={() => handleDeletePhoto(p._id)}
-              disabled={isDeleting}
-              className="p-2 bg-black/50 rounded text-red-400/50 hover:text-red-400 backdrop-blur-md"
+              disabled={isDeleting || isUpdating}
+              className="p-2 bg-black/50 rounded text-red-400/50 hover:text-red-400 backdrop-blur-md disabled:opacity-50"
             >
               {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
             </button>
@@ -118,8 +120,20 @@ function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhoto
                 {categories.map((c: any) => <option key={c._id} value={c._id} className="bg-[#111] text-white">{c.name}</option>)}
               </select>
               <div className="flex gap-2">
-                <button onClick={() => handleUpdatePhoto(p._id, { title: editPhotoTitle, category: editPhotoCategory })} className="flex-1 bg-green-500/20 text-green-400 py-1.5 rounded text-sm font-medium hover:bg-green-500/30">Save</button>
-                <button onClick={() => setEditingPhotoId(null)} className="flex-1 bg-white/5 text-white/50 py-1.5 rounded text-sm font-medium hover:bg-white/10">Cancel</button>
+                <button 
+                  onClick={() => handleUpdatePhoto(p._id, { title: editPhotoTitle, category: editPhotoCategory })} 
+                  disabled={isUpdating}
+                  className="flex-1 flex items-center justify-center bg-green-500/20 text-green-400 py-1.5 rounded text-sm font-medium hover:bg-green-500/30 disabled:opacity-50"
+                >
+                  {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save"}
+                </button>
+                <button 
+                  onClick={() => setEditingPhotoId(null)} 
+                  disabled={isUpdating}
+                  className="flex-1 bg-white/5 text-white/50 py-1.5 rounded text-sm font-medium hover:bg-white/10 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
               </div>
             </div>
           ) : (
@@ -158,6 +172,7 @@ export default function ModeratorDashboard() {
   const [editPhotoTitle, setEditPhotoTitle] = useState("");
   const [editPhotoCategory, setEditPhotoCategory] = useState("");
   const [deletingPhotoId, setDeletingPhotoId] = useState<string | null>(null);
+  const [updatingPhotoId, setUpdatingPhotoId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -271,13 +286,15 @@ export default function ModeratorDashboard() {
   };
 
   const handleUpdatePhoto = async (id: string, payload: any) => {
+    setUpdatingPhotoId(id);
     await fetch(`/api/photos/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
     setEditingPhotoId(null);
-    fetchData();
+    await fetchData();
+    setUpdatingPhotoId(null);
   };
 
   const handleDragEndPhotos = (event: DragEndEvent) => {
