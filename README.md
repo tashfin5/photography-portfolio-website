@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cinematic Photography Portfolio
 
-## Getting Started
+A visually stunning, ultra-premium photography portfolio built for the modern web. Designed with a dark, cinematic aesthetic, fluid animations, and a seamless user experience. 
 
-First, run the development server:
+It includes a fully custom, secure backend moderator panel that allows the photographer to dynamically upload, reorder, and manage their portfolio using a beautiful drag-and-drop interface.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## ✨ Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Cinematic Aesthetic**: Dark mode by default, featuring deep copper accents, subtle noise textures, and glowing ambient backgrounds.
+- **Fluid Animations**: High-performance scroll tracking, staggered text reveals, and magnetic hover physics powered by Framer Motion.
+- **Dynamic Horizontal Slider**: A highly custom horizontal scrolling track for featured works that intelligently transforms based on the device width.
+- **Advanced Lightbox**: A native, highly responsive image viewing experience that locks the background and elegantly transitions photos.
+- **Custom Backend Moderator Panel**: A secure `/moderator` dashboard allowing the owner to:
+  - Upload raw images directly to Cloudinary.
+  - Create and manage photography categories.
+  - Drag-and-drop photos to reorder how they appear on the live site.
+  - Instantly feature/unfeature specific works.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Framework**: [Next.js 14](https://nextjs.org/) (App Router, Server Components, API Routes)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [Lenis Smooth Scroll](https://github.com/darkroomengineering/lenis)
+- **Database**: [MongoDB](https://www.mongodb.com/) (Mongoose)
+- **Image Hosting**: [Cloudinary](https://cloudinary.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-## Learn More
+## 🚀 Local Setup
 
-To learn more about Next.js, take a look at the following resources:
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/tashfin5/photography-portfolio-website.git
+   cd photography-portfolio-website
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Environment Variables**
+   Create a `.env.local` file in the root of the project and add the following keys:
+   ```env
+   # MongoDB Connection String
+   MONGODB_URI=your_mongodb_uri
 
-## Deploy on Vercel
+   # Cloudinary Credentials
+   CLOUDINARY_CLOUD_NAME=your_cloud_name
+   CLOUDINARY_API_KEY=your_api_key
+   CLOUDINARY_API_SECRET=your_api_secret
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   # Moderator Login (Optional overrides)
+   ADMIN_USERNAME=admin
+   ADMIN_PASSWORD=your_secure_password
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+5. **Open the app**
+   Visit `http://localhost:3000` in your browser. To access the admin panel, navigate to `http://localhost:3000/moderator`.
+
+## 🌐 Deployment
+
+This application is fully optimized for immediate deployment on **Vercel**. 
+1. Import the repository into Vercel.
+2. Add your 4 Environment Variables to the Vercel project settings.
+3. Deploy! Vercel will automatically handle all Next.js server components and image optimization.
+
+---
+*Designed & Engineered for visual perfection.*
