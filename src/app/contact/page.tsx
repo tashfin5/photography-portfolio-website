@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import Navigation from "@/components/layout/Navigation";
 import { motion, Variants } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -38,7 +39,9 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-200/30">
-      <Navigation />
+      <Suspense fallback={<div className="h-24" />}>
+        <Navigation />
+      </Suspense>
       
       <main className="flex-1 w-full max-w-[1600px] mx-auto px-6 md:px-12 pt-48 lg:pt-56 pb-20 flex flex-col justify-center">
         <div className="flex flex-col gap-16 lg:gap-24">
