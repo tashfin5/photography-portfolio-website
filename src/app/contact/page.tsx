@@ -66,7 +66,7 @@ export default function ContactPage() {
             style={{ perspective: 1000 }}
             className="w-full text-center flex flex-col items-center px-4"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] 2xl:text-[160px] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-white to-white/20 mb-8 flex flex-col items-center justify-center overflow-y-hidden py-4">
+            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] 2xl:text-[160px] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 mb-8 flex flex-col items-center justify-center overflow-y-hidden py-4">
               <div className="flex overflow-y-hidden">
                 {"LET'S".split("").map((char, index) => (
                   <motion.span

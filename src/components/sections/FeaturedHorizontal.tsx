@@ -99,7 +99,7 @@ export default function FeaturedHorizontal({ photos }: { photos: any[] }) {
               initial="hidden"
               animate={isInView ? "show" : "hidden"}
               style={{ perspective: 1000 }}
-              className="text-5xl md:text-[7vw] lg:text-[6vw] xl:text-[5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-white/20 leading-[0.85] flex flex-col items-start"
+              className="text-5xl md:text-[7vw] lg:text-[6vw] xl:text-[5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 leading-[0.85] flex flex-col items-start"
             >
               <div className="flex overflow-hidden">
                 {"FEATURED".split("").map((char, index) => (
@@ -174,7 +174,7 @@ export default function FeaturedHorizontal({ photos }: { photos: any[] }) {
             whileInView="show"
             viewport={{ once: true }}
             style={{ perspective: 1000 }}
-            className="text-[9.5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-white to-white/20 leading-[0.85] flex flex-col items-start w-full"
+            className="text-[9.5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 leading-[0.85] flex flex-col items-start w-full"
           >
             <div className="flex overflow-hidden">
               {"FEATURED".split("").map((char, index) => (

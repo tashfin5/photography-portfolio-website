@@ -27,7 +27,6 @@ export default function RootLayout({
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,#5a2200_0%,#000000_100%)]"></div>
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,#3a1000_0%,transparent_50%)]"></div>
         </div>
-        <div className="bg-noise" />
         <Preloader />
         {children}
         <Footer />
