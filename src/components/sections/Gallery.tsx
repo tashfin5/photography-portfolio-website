@@ -163,12 +163,8 @@ export default function Gallery({ photos }: { photos: any[] }) {
           >
             {/* Immersive Background */}
             <div className="absolute inset-0 bg-[#0a0a0a] pointer-events-none overflow-hidden">
-              {/* Core bright highlight (gloss) */}
-              <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[80vw] h-[40vh] bg-[#FF7E00]/25 rounded-[100%] blur-[120px] mix-blend-screen" />
-              {/* Wide ambient falloff */}
-              <div className="absolute top-[-30%] left-1/2 -translate-x-1/2 w-[150vw] h-[80vh] bg-[#D45020]/15 rounded-[100%] blur-[150px]" />
-              {/* Bottom right accent */}
-              <div className="absolute bottom-[-20%] right-[-10vw] w-[60vw] h-[60vh] bg-[#FF5E3A]/10 rounded-full blur-[120px] mix-blend-screen" />
+              <div className="absolute -inset-[200px] bg-[radial-gradient(ellipse_at_top,rgba(255,120,0,0.25)_0%,rgba(10,10,10,1)_80%)] blur-[120px]"></div>
+              <div className="absolute -inset-[200px] bg-[radial-gradient(circle_at_bottom_right,rgba(255,100,0,0.15)_0%,rgba(10,10,10,0)_60%)] blur-[120px]"></div>
             </div>
 
             <button 
