@@ -92,12 +92,16 @@ export default function Navigation() {
               href="/"
               onClick={(e) => handleNav(e, null)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
+                "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
                 isAllActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
               All
-              {isPending && pendingSlug === 'all' && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
+              {isPending && pendingSlug === 'all' && (
+                <div className="absolute -right-5 top-1/2 -translate-y-1/2">
+                  <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                </div>
+              )}
               {isAllActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
             </a>
 
@@ -109,12 +113,16 @@ export default function Navigation() {
                   href={`/?category=${cat.slug}`}
                   onClick={(e) => handleNav(e, cat.slug)}
                   className={cn(
-                    "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
+                    "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
                     isActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
                   )}
                 >
                   {cat.name}
-                  {isPending && pendingSlug === cat.slug && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
+                  {isPending && pendingSlug === cat.slug && (
+                    <div className="absolute -right-5 top-1/2 -translate-y-1/2">
+                      <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                    </div>
+                  )}
                   {isActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
                 </a>
               );
@@ -126,12 +134,16 @@ export default function Navigation() {
               href="/contact"
               onClick={(e) => handleNav(e, null, true)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1 flex items-center gap-2",
+                "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
                 isContactActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
               Contact
-              {isPending && pendingSlug === 'contact' && <Loader2 className="w-3 h-3 animate-spin text-brand-200" />}
+              {isPending && pendingSlug === 'contact' && (
+                <div className="absolute -right-5 top-1/2 -translate-y-1/2">
+                  <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                </div>
+              )}
               {isContactActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
             </a>
           </nav>
