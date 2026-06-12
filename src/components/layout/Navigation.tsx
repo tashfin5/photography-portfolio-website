@@ -98,7 +98,7 @@ export default function Navigation() {
             >
               All
               {isPending && pendingSlug === 'all' && (
-                <div className="absolute -right-5 top-1/2 -translate-y-1/2">
+                <div className="absolute -left-5 top-1/2 -translate-y-1/2">
                   <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
                 </div>
               )}
@@ -119,7 +119,7 @@ export default function Navigation() {
                 >
                   {cat.name}
                   {isPending && pendingSlug === cat.slug && (
-                    <div className="absolute -right-5 top-1/2 -translate-y-1/2">
+                    <div className="absolute -left-5 top-1/2 -translate-y-1/2">
                       <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
                     </div>
                   )}
