@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useTransition } from "react";
+import { useState, useEffect, useTransition, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
@@ -27,6 +27,18 @@ export default function Navigation() {
   const [isPending, startTransition] = useTransition();
   const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const currentCategory = searchParams.get("category");
+
+  const wasPendingRef = useRef(isPending);
+
+  useEffect(() => {
+    // If we were just pending a route change and now we're not, the route change has finished!
+    // So we can close the mobile menu.
+    if (wasPendingRef.current && !isPending) {
+      setMobileMenuOpen(false);
+      setPendingSlug(null); // Clear the loading state so it's clean if reopened
+    }
+    wasPendingRef.current = isPending;
+  }, [isPending]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -202,10 +214,7 @@ export default function Navigation() {
                         "text-3xl sm:text-4xl font-medium transition-colors mb-6 relative flex items-center w-fit",
                         !currentCategory ? "text-brand-200" : "text-white/60 hover:text-white"
                       )}
-                      onClick={(e) => {
-                        handleNav(e, null);
-                        setMobileMenuOpen(false);
-                      }}
+                      onClick={(e) => handleNav(e, null)}
                     >
                       <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
                         All Works
@@ -232,10 +241,7 @@ export default function Navigation() {
                             "text-xl sm:text-2xl font-medium transition-colors relative flex items-center w-fit",
                             currentCategory === cat.slug ? "text-brand-200" : "text-white/60 hover:text-white"
                           )}
-                          onClick={(e) => {
-                            handleNav(e, cat.slug);
-                            setMobileMenuOpen(false);
-                          }}
+                          onClick={(e) => handleNav(e, cat.slug)}
                         >
                           {currentCategory === cat.slug && (
                             <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-full bg-brand-200" />
@@ -264,10 +270,7 @@ export default function Navigation() {
                   <a
                     href="/contact"
                     className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors relative flex items-center w-fit"
-                    onClick={(e) => {
-                      handleNav(e, null, true);
-                      setMobileMenuOpen(false);
-                    }}
+                    onClick={(e) => handleNav(e, null, true)}
                   >
                     <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'contact' ? "opacity-0" : "opacity-100")}>
                       Contact
