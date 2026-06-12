@@ -41,7 +41,7 @@ export default async function Home({
         <Navigation />
       </Suspense>
       
-      {!currentCategory && photos.some(p => p.isFeatured) && (
+      {!currentCategory && photos.some((p: any) => p.isFeatured) && (
         <FeaturedHorizontal photos={photos} />
       )}
       
