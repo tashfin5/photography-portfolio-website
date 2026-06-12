@@ -6,6 +6,7 @@ import { LogOut, Trash2, Upload, Plus, Edit2, Check, X, Search, Filter, GripVert
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, rectSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { motion, AnimatePresence } from "framer-motion";
 
 function SortableCategory({ c, editingCatId, editCatName, setEditCatName, handleUpdateCategory, setEditingCatId, handleDeleteCategory }: any) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: c._id });
@@ -55,7 +56,7 @@ function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhoto
   const isDeleting = deletingPhotoId === p._id;
 
   return (
-    <div ref={setNodeRef} style={style} className={`break-inside-avoid mb-8 flex flex-col rounded-xl overflow-hidden relative group ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
+    <div ref={setNodeRef} style={style} className={`flex flex-col rounded-xl overflow-hidden relative group h-full ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
       {/* The pure image dictates the exact layout height just like the main site */}
       <img src={p.imageUrl} alt={p.title} className="w-full h-auto" />
       
@@ -306,6 +307,10 @@ export default function ModeratorDashboard() {
       matchesCat = p.isFeatured === true;
     } else if (filterCategory) {
       matchesCat = p.category?._id === filterCategory;
+    } else {
+      // Default: "All Categories" view
+      // Do not show featured photos in the default "All Categories" list
+      matchesCat = p.isFeatured !== true;
     }
     
     return matchesSearch && matchesCat;
@@ -454,23 +459,34 @@ export default function ModeratorDashboard() {
                 ) : (
                   <>
                     <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
-                      {filteredPhotos.map((p) => (
-                        <SortablePhoto 
-                          key={p._id} 
-                          p={p} 
-                          categories={categories}
-                          isDragEnabled={isPhotoDragEnabled}
-                          editingPhotoId={editingPhotoId}
-                          editPhotoTitle={editPhotoTitle}
-                          setEditPhotoTitle={setEditPhotoTitle}
-                          editPhotoCategory={editPhotoCategory}
-                          setEditPhotoCategory={setEditPhotoCategory}
-                          handleUpdatePhoto={handleUpdatePhoto}
-                          setEditingPhotoId={setEditingPhotoId}
-                          handleDeletePhoto={handleDeletePhoto}
-                          deletingPhotoId={deletingPhotoId}
-                        />
-                      ))}
+                      <AnimatePresence mode="popLayout">
+                        {filteredPhotos.map((p) => (
+                          <motion.div
+                            key={p._id}
+                            layout
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.5 }}
+                            transition={{ duration: 0.3 }}
+                            className="break-inside-avoid mb-8"
+                          >
+                            <SortablePhoto 
+                              p={p} 
+                              categories={categories}
+                              isDragEnabled={isPhotoDragEnabled}
+                              editingPhotoId={editingPhotoId}
+                              editPhotoTitle={editPhotoTitle}
+                              setEditPhotoTitle={setEditPhotoTitle}
+                              editPhotoCategory={editPhotoCategory}
+                              setEditPhotoCategory={setEditPhotoCategory}
+                              handleUpdatePhoto={handleUpdatePhoto}
+                              setEditingPhotoId={setEditingPhotoId}
+                              handleDeletePhoto={handleDeletePhoto}
+                              deletingPhotoId={deletingPhotoId}
+                            />
+                          </motion.div>
+                        ))}
+                      </AnimatePresence>
                     </div>
                     {filteredPhotos.length === 0 && <p className="text-white/50 text-sm py-8 text-center w-full">No photos found matching your criteria.</p>}
                   </>
