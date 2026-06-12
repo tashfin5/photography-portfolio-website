@@ -183,10 +183,17 @@ export default function Gallery({ photos }: { photos: any[] }) {
             >
               {/* Dynamic Reflection Shadow */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                {/* Massive soft ambient glow */}
                 <img
                   src={selectedPhoto.imageUrl}
                   alt=""
-                  className="max-w-full max-h-[85vh] object-contain blur-[80px] opacity-70 scale-105 -translate-y-4"
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[120px] opacity-70 scale-110 saturate-150"
+                />
+                {/* Tighter, brighter glass reflection */}
+                <img
+                  src={selectedPhoto.imageUrl}
+                  alt=""
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[50px] opacity-90 scale-105 saturate-200"
                 />
               </div>
 
