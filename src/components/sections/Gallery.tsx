@@ -181,19 +181,23 @@ export default function Gallery({ photos }: { photos: any[] }) {
               transition={{ duration: 0.5, type: "spring", bounce: 0.2 }}
               className="relative w-full h-full flex flex-col items-center justify-center"
             >
-              {/* Dynamic Reflection Shadow */}
+              {/* Dynamic Reflection Shadows & Glass Effects */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                {/* Massive soft ambient glow */}
+                
+                {/* Left Side Ambient Glass Glow (Generic, not photo) */}
+                <div className="absolute w-[50vh] h-[70vh] rounded-full bg-gradient-to-tr from-white/5 to-brand-200/10 blur-[90px] -translate-x-[20vw]" />
+                
+                {/* Massive soft ambient glow (Right Side Photo Reflection) */}
                 <img
                   src={selectedPhoto.imageUrl}
                   alt=""
-                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[120px] opacity-70 scale-110 saturate-150"
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[120px] opacity-70 scale-110 saturate-150 translate-x-[15vw]"
                 />
-                {/* Tighter, brighter glass reflection */}
+                {/* Tighter, brighter glass reflection (Right Side Photo Reflection) */}
                 <img
                   src={selectedPhoto.imageUrl}
                   alt=""
-                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[50px] opacity-90 scale-105 saturate-200"
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[50px] opacity-90 scale-105 saturate-200 translate-x-[10vw]"
                 />
               </div>
 
