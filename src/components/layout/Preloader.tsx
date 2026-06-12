@@ -6,6 +6,10 @@ import { Bodoni_Moda } from "next/font/google";
 
 const bodoni = Bodoni_Moda({ subsets: ["latin"], weight: ["400", "700", "900"] });
 
+if (typeof window !== "undefined" && typeof (window as any).isPreloaderActive === "undefined") {
+  (window as any).isPreloaderActive = true;
+}
+
 export default function Preloader() {
   const [isLoading, setIsLoading] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -21,6 +25,7 @@ export default function Preloader() {
           clearInterval(interval);
           if (typeof window !== "undefined") {
             (window as any).isPreloaderActive = false;
+            window.dispatchEvent(new Event("preloaderComplete"));
           }
           setTimeout(() => setIsLoading(false), 500);
           return 100;

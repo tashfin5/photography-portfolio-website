@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useState, useEffect } from "react";
 import Navigation from "@/components/layout/Navigation";
 import { motion, Variants } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -35,7 +35,19 @@ const charVariants: Variants = {
 };
 
 export default function ContactPage() {
-  const headingText = "Let's Create.";
+  const [canAnimate, setCanAnimate] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if ((window as any).isPreloaderActive === false) {
+        setCanAnimate(true);
+      } else {
+        const handlePreloader = () => setCanAnimate(true);
+        window.addEventListener("preloaderComplete", handlePreloader);
+        return () => window.removeEventListener("preloaderComplete", handlePreloader);
+      }
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-brand-200/30">
@@ -50,7 +62,7 @@ export default function ContactPage() {
           <motion.div 
             variants={textContainerVariants}
             initial="hidden"
-            animate="show"
+            animate={canAnimate ? "show" : "hidden"}
             style={{ perspective: 1000 }}
             className="w-full text-center flex flex-col items-center px-4"
           >
