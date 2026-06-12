@@ -84,22 +84,15 @@ export default function FeaturedHorizontal({ photos }: { photos: any[] }) {
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
           
           {/* Title Block - Pushing deeper into the right so sliding photos disappear correctly */}
-          <div className="pl-6 md:pl-12 shrink-0 pr-16 md:pr-32 z-10 relative h-full flex flex-col justify-center">
-            {/* Glassmorphic fade layer to elegantly hide sliding photos while letting global glow shine through */}
-            <div 
-              className="absolute inset-0 bg-[#0a0a0a]/20 backdrop-blur-3xl -z-10"
-              style={{ 
-                WebkitMaskImage: "linear-gradient(to right, black 60%, transparent 100%)",
-                maskImage: "linear-gradient(to right, black 60%, transparent 100%)" 
-              }}
-            />
+          {/* Title Block */}
+          <div className="pl-6 md:pl-12 shrink-0 pr-16 md:pr-32 z-10 relative h-full flex flex-col justify-center pointer-events-none">
             <motion.h2 
               ref={textRef}
               variants={textContainerVariants}
               initial="hidden"
               animate={isInView ? "show" : "hidden"}
               style={{ perspective: 1000 }}
-              className="text-5xl md:text-[7vw] lg:text-[6vw] xl:text-[5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 leading-[0.85] flex flex-col items-start"
+              className="text-5xl md:text-[7vw] lg:text-[6vw] xl:text-[5vw] font-black uppercase tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 leading-[0.85] flex flex-col items-start pointer-events-auto"
             >
               <div className="flex overflow-hidden">
                 {"FEATURED".split("").map((char, index) => (
@@ -116,52 +109,60 @@ export default function FeaturedHorizontal({ photos }: { photos: any[] }) {
                 ))}
               </div>
             </motion.h2>
-            <div className="flex items-center gap-4 mt-8">
+            <div className="flex items-center gap-4 mt-8 pointer-events-auto">
               <div className="h-px w-12 bg-brand-200" />
               <p className="text-brand-200 tracking-widest uppercase text-xs md:text-sm">Scroll</p>
             </div>
           </div>
           
-          {/* Horizontal Sliding Track */}
-          <motion.div style={{ x }} className="flex gap-8 md:gap-16 px-8 relative z-0 pr-[10vw]">
-            {featured.map((photo, index) => (
-              <motion.div 
-                key={photo._id} 
-                initial={{ opacity: 0, scale: 0.85, x: 100 }}
-                animate={isInView ? { opacity: 1, scale: 1, x: 0 } : { opacity: 0, scale: 0.85, x: 100 }}
-                transition={{ 
-                  duration: 0.9, 
-                  delay: delay + 0.6 + (index * 0.1), 
-                  ease: [0.21, 0.47, 0.32, 0.98] 
-                }}
-                className="relative w-[75vw] md:w-[45vw] lg:w-[35vw] h-[50vh] md:h-[65vh] shrink-0 rounded-2xl overflow-hidden group shadow-2xl cursor-pointer"
-                onClick={() => openLightbox(photo)}
-              >
-                <motion.img 
-                  layoutId={`photo-${photo._id}-featured`}
-                  src={photo.imageUrl} 
-                  alt={photo.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out filter group-hover:contrast-125" 
-                />
-                
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex items-end p-8 md:p-12 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
-                  <motion.div 
-                    initial={{ y: 20, opacity: 0 }}
-                    whileInView={{ y: 0, opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  >
-                    <p className="text-brand-200 text-xs md:text-sm font-mono tracking-widest uppercase mb-3 drop-shadow-md">
-                      {photo.category?.name}
-                    </p>
-                    <h3 className="text-white text-2xl md:text-4xl font-light drop-shadow-lg tracking-wide">
-                      {photo.title}
-                    </h3>
-                  </motion.div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* Horizontal Sliding Track Wrapper with Mask */}
+          <div 
+            className="flex-1 h-full flex items-center overflow-visible"
+            style={{ 
+              WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 15%, black 100%)",
+              maskImage: "linear-gradient(to right, transparent 0%, black 15%, black 100%)" 
+            }}
+          >
+            <motion.div style={{ x }} className="flex gap-8 md:gap-16 px-8 relative z-0 pr-[10vw]">
+              {featured.map((photo, index) => (
+                <motion.div 
+                  key={photo._id} 
+                  initial={{ opacity: 0, scale: 0.85, x: 100 }}
+                  animate={isInView ? { opacity: 1, scale: 1, x: 0 } : { opacity: 0, scale: 0.85, x: 100 }}
+                  transition={{ 
+                    duration: 0.9, 
+                    delay: delay + 0.6 + (index * 0.1), 
+                    ease: [0.21, 0.47, 0.32, 0.98] 
+                  }}
+                  className="relative w-[75vw] md:w-[45vw] lg:w-[35vw] h-[50vh] md:h-[65vh] shrink-0 rounded-2xl overflow-hidden group shadow-2xl cursor-pointer"
+                  onClick={() => openLightbox(photo)}
+                >
+                  <motion.img 
+                    layoutId={`photo-${photo._id}-featured`}
+                    src={photo.imageUrl} 
+                    alt={photo.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out filter group-hover:contrast-125" 
+                  />
+                  
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent flex items-end p-8 md:p-12 opacity-80 group-hover:opacity-100 transition-opacity duration-500">
+                    <motion.div 
+                      initial={{ y: 20, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                    >
+                      <p className="text-brand-200 text-xs md:text-sm font-mono tracking-widest uppercase mb-3 drop-shadow-md">
+                        {photo.category?.name}
+                      </p>
+                      <h3 className="text-white text-2xl md:text-4xl font-light drop-shadow-lg tracking-wide">
+                        {photo.title}
+                      </h3>
+                    </motion.div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </section>
 
