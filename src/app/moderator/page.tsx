@@ -471,7 +471,7 @@ export default function ModeratorDashboard() {
                 {isLoading ? (
                   <div className="flex flex-col items-center justify-center py-24 w-full">
                     <Loader2 className="w-10 h-10 animate-spin text-brand-200 mb-4" />
-                    <p className="text-white/50 text-sm">Loading your photos from Cloudinary...</p>
+                    <p className="text-white/50 text-sm">Loading your photos...</p>
                   </div>
                 ) : (
                   <>
