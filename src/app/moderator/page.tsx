@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { LogOut, Trash2, Upload, Plus, Edit2, Check, X, Search, Filter, GripVertical, GripHorizontal, Star } from "lucide-react";
+import { LogOut, Trash2, Upload, Plus, Edit2, Check, X, Search, Filter, GripVertical, GripHorizontal, Star, Loader2 } from "lucide-react";
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy, rectSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -49,12 +49,13 @@ function SortableCategory({ c, editingCatId, editCatName, setEditCatName, handle
   );
 }
 
-function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhotoTitle, setEditPhotoTitle, editPhotoCategory, setEditPhotoCategory, handleUpdatePhoto, setEditingPhotoId, handleDeletePhoto }: any) {
+function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhotoTitle, setEditPhotoTitle, editPhotoCategory, setEditPhotoCategory, handleUpdatePhoto, setEditingPhotoId, handleDeletePhoto, deletingPhotoId }: any) {
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: p._id });
   const style = { transform: CSS.Transform.toString(transform), transition };
+  const isDeleting = deletingPhotoId === p._id;
 
   return (
-    <div ref={setNodeRef} style={style} className="break-inside-avoid mb-8 flex flex-col rounded-xl overflow-hidden relative group">
+    <div ref={setNodeRef} style={style} className={`break-inside-avoid mb-8 flex flex-col rounded-xl overflow-hidden relative group ${isDeleting ? 'opacity-50 pointer-events-none' : ''}`}>
       {/* The pure image dictates the exact layout height just like the main site */}
       <img src={p.imageUrl} alt={p.title} className="w-full h-auto" />
       
@@ -90,9 +91,10 @@ function SortablePhoto({ p, categories, isDragEnabled, editingPhotoId, editPhoto
             </button>
             <button 
               onClick={() => handleDeletePhoto(p._id)}
+              disabled={isDeleting}
               className="p-2 bg-black/50 rounded text-red-400/50 hover:text-red-400 backdrop-blur-md"
             >
-              <Trash2 className="w-4 h-4" />
+              {isDeleting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Trash2 className="w-4 h-4" />}
             </button>
           </div>
         </div>
@@ -135,6 +137,7 @@ export default function ModeratorDashboard() {
   const router = useRouter();
   const [categories, setCategories] = useState<any[]>([]);
   const [photos, setPhotos] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
   const [newCatName, setNewCatName] = useState("");
   const [uploadFile, setUploadFile] = useState<File | null>(null);
@@ -153,6 +156,7 @@ export default function ModeratorDashboard() {
   const [editingPhotoId, setEditingPhotoId] = useState<string | null>(null);
   const [editPhotoTitle, setEditPhotoTitle] = useState("");
   const [editPhotoCategory, setEditPhotoCategory] = useState("");
+  const [deletingPhotoId, setDeletingPhotoId] = useState<string | null>(null);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -164,12 +168,14 @@ export default function ModeratorDashboard() {
   }, []);
 
   const fetchData = async () => {
+    setIsLoading(true);
     const [catRes, photRes] = await Promise.all([
       fetch("/api/categories", { cache: "no-store" }),
       fetch("/api/photos", { cache: "no-store" }),
     ]);
     if (catRes.ok) setCategories(await catRes.json());
     if (photRes.ok) setPhotos(await photRes.json());
+    setIsLoading(false);
   };
 
   const handleLogout = async () => {
@@ -257,8 +263,10 @@ export default function ModeratorDashboard() {
 
   const handleDeletePhoto = async (id: string) => {
     if (!confirm("Delete this photo?")) return;
+    setDeletingPhotoId(id);
     const res = await fetch(`/api/photos/${id}`, { method: "DELETE" });
-    if (res.ok) fetchData();
+    if (res.ok) await fetchData();
+    setDeletingPhotoId(null);
   };
 
   const handleUpdatePhoto = async (id: string, payload: any) => {
@@ -438,25 +446,35 @@ export default function ModeratorDashboard() {
 
             <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEndPhotos}>
               <SortableContext items={filteredPhotos.map(p => p._id)} strategy={rectSortingStrategy}>
-                <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
-                  {filteredPhotos.map((p) => (
-                    <SortablePhoto 
-                      key={p._id} 
-                      p={p} 
-                      categories={categories}
-                      isDragEnabled={isPhotoDragEnabled}
-                      editingPhotoId={editingPhotoId}
-                      editPhotoTitle={editPhotoTitle}
-                      setEditPhotoTitle={setEditPhotoTitle}
-                      editPhotoCategory={editPhotoCategory}
-                      setEditPhotoCategory={setEditPhotoCategory}
-                      handleUpdatePhoto={handleUpdatePhoto}
-                      setEditingPhotoId={setEditingPhotoId}
-                      handleDeletePhoto={handleDeletePhoto}
-                    />
-                  ))}
-                </div>
-                {filteredPhotos.length === 0 && <p className="text-white/50 text-sm py-8 text-center w-full">No photos found matching your criteria.</p>}
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center py-24 w-full">
+                    <Loader2 className="w-10 h-10 animate-spin text-brand-200 mb-4" />
+                    <p className="text-white/50 text-sm">Loading your photos from Cloudinary...</p>
+                  </div>
+                ) : (
+                  <>
+                    <div className="columns-1 md:columns-2 lg:columns-3 gap-8">
+                      {filteredPhotos.map((p) => (
+                        <SortablePhoto 
+                          key={p._id} 
+                          p={p} 
+                          categories={categories}
+                          isDragEnabled={isPhotoDragEnabled}
+                          editingPhotoId={editingPhotoId}
+                          editPhotoTitle={editPhotoTitle}
+                          setEditPhotoTitle={setEditPhotoTitle}
+                          editPhotoCategory={editPhotoCategory}
+                          setEditPhotoCategory={setEditPhotoCategory}
+                          handleUpdatePhoto={handleUpdatePhoto}
+                          setEditingPhotoId={setEditingPhotoId}
+                          handleDeletePhoto={handleDeletePhoto}
+                          deletingPhotoId={deletingPhotoId}
+                        />
+                      ))}
+                    </div>
+                    {filteredPhotos.length === 0 && <p className="text-white/50 text-sm py-8 text-center w-full">No photos found matching your criteria.</p>}
+                  </>
+                )}
               </SortableContext>
             </DndContext>
           </div>
