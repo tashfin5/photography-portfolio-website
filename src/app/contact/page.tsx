@@ -111,7 +111,7 @@ export default function ContactPage() {
             <div className="absolute -inset-24 bg-gradient-to-r from-brand-200/20 to-brand-400/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
             <div className="relative z-10 space-y-12">
-              <a href="mailto:hello@example.com" className="flex items-start gap-6 group/link">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hello@example.com" target="_blank" rel="noopener noreferrer" className="flex items-start gap-6 group/link">
                 <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover/link:bg-brand-200/20 group-hover/link:border-brand-200/50 transition-colors">
                   <Mail className="w-5 h-5 text-brand-200" />
                 </div>
