@@ -81,7 +81,7 @@ export default function Navigation() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500 flex items-center justify-center",
-          scrolled ? "py-4 bg-dark-100/60 backdrop-blur-2xl border-b border-brand-200/20 shadow-2xl shadow-black/50" : "py-8 bg-transparent border-b border-transparent"
+          scrolled ? "py-4 bg-[#0a0a0a]/40 backdrop-blur-3xl border-b border-white/5 shadow-2xl" : "py-8 bg-transparent border-b border-transparent"
         )}
       >
         <div className="w-full max-w-[1600px] px-6 md:px-12 flex items-center justify-between gap-12">
