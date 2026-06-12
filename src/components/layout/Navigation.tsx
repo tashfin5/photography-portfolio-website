@@ -92,14 +92,16 @@ export default function Navigation() {
               href="/"
               onClick={(e) => handleNav(e, null)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
+                "text-sm font-medium transition-colors relative py-1 flex items-center justify-center whitespace-nowrap",
                 isAllActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
-              All
+              <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
+                All
+              </span>
               {isPending && pendingSlug === 'all' && (
-                <div className="absolute -left-5 top-1/2 -translate-y-1/2">
-                  <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="w-4 h-4 animate-spin text-brand-200" />
                 </div>
               )}
               {isAllActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
@@ -113,14 +115,16 @@ export default function Navigation() {
                   href={`/?category=${cat.slug}`}
                   onClick={(e) => handleNav(e, cat.slug)}
                   className={cn(
-                    "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
+                    "text-sm font-medium transition-colors relative py-1 flex items-center justify-center whitespace-nowrap",
                     isActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
                   )}
                 >
-                  {cat.name}
+                  <span className={cn("transition-opacity duration-200", isPending && pendingSlug === cat.slug ? "opacity-0" : "opacity-100")}>
+                    {cat.name}
+                  </span>
                   {isPending && pendingSlug === cat.slug && (
-                    <div className="absolute -left-5 top-1/2 -translate-y-1/2">
-                      <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Loader2 className="w-4 h-4 animate-spin text-brand-200" />
                     </div>
                   )}
                   {isActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
@@ -134,14 +138,16 @@ export default function Navigation() {
               href="/contact"
               onClick={(e) => handleNav(e, null, true)}
               className={cn(
-                "text-sm font-medium transition-colors relative py-1 flex items-center whitespace-nowrap",
+                "text-sm font-medium transition-colors relative py-1 flex items-center justify-center whitespace-nowrap",
                 isContactActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
               )}
             >
-              Contact
+              <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'contact' ? "opacity-0" : "opacity-100")}>
+                Contact
+              </span>
               {isPending && pendingSlug === 'contact' && (
-                <div className="absolute -right-5 top-1/2 -translate-y-1/2">
-                  <Loader2 className="w-3 h-3 animate-spin text-brand-200" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <Loader2 className="w-4 h-4 animate-spin text-brand-200" />
                 </div>
               )}
               {isContactActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
@@ -193,7 +199,7 @@ export default function Navigation() {
                     <a
                       href="/"
                       className={cn(
-                        "text-3xl sm:text-4xl font-medium transition-colors mb-6 flex items-center gap-4",
+                        "text-3xl sm:text-4xl font-medium transition-colors mb-6 relative flex items-center w-fit",
                         !currentCategory ? "text-brand-200" : "text-white/60 hover:text-white"
                       )}
                       onClick={(e) => {
@@ -201,8 +207,14 @@ export default function Navigation() {
                         setMobileMenuOpen(false);
                       }}
                     >
-                      All Works
-                      {isPending && pendingSlug === 'all' && <Loader2 className="w-5 h-5 animate-spin text-brand-200" />}
+                      <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
+                        All Works
+                      </span>
+                      {isPending && pendingSlug === 'all' && (
+                        <div className="absolute inset-0 flex items-center justify-start">
+                          <Loader2 className="w-6 h-6 animate-spin text-brand-200" />
+                        </div>
+                      )}
                     </a>
                   </motion.div>
 
@@ -217,7 +229,7 @@ export default function Navigation() {
                         <a
                           href={`/?category=${cat.slug}`}
                           className={cn(
-                            "text-xl sm:text-2xl font-medium transition-colors relative flex items-center gap-3",
+                            "text-xl sm:text-2xl font-medium transition-colors relative flex items-center w-fit",
                             currentCategory === cat.slug ? "text-brand-200" : "text-white/60 hover:text-white"
                           )}
                           onClick={(e) => {
@@ -228,8 +240,14 @@ export default function Navigation() {
                           {currentCategory === cat.slug && (
                             <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-full bg-brand-200" />
                           )}
-                          {cat.name}
-                          {isPending && pendingSlug === cat.slug && <Loader2 className="w-4 h-4 animate-spin text-brand-200" />}
+                          <span className={cn("transition-opacity duration-200", isPending && pendingSlug === cat.slug ? "opacity-0" : "opacity-100")}>
+                            {cat.name}
+                          </span>
+                          {isPending && pendingSlug === cat.slug && (
+                            <div className="absolute inset-0 flex items-center justify-start">
+                              <Loader2 className="w-5 h-5 animate-spin text-brand-200" />
+                            </div>
+                          )}
                         </a>
                       </motion.div>
                     ))}
@@ -245,14 +263,20 @@ export default function Navigation() {
                   <p className="text-xs text-white/40 tracking-[0.3em] uppercase mb-4 font-semibold">Get in Touch</p>
                   <a
                     href="/contact"
-                    className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors flex items-center gap-4"
+                    className="text-3xl sm:text-4xl font-medium text-white/60 hover:text-brand-200 transition-colors relative flex items-center w-fit"
                     onClick={(e) => {
                       handleNav(e, null, true);
                       setMobileMenuOpen(false);
                     }}
                   >
-                    Contact
-                    {isPending && pendingSlug === 'contact' && <Loader2 className="w-5 h-5 animate-spin text-brand-200" />}
+                    <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'contact' ? "opacity-0" : "opacity-100")}>
+                      Contact
+                    </span>
+                    {isPending && pendingSlug === 'contact' && (
+                      <div className="absolute inset-0 flex items-center justify-start">
+                        <Loader2 className="w-6 h-6 animate-spin text-brand-200" />
+                      </div>
+                    )}
                   </a>
                 </motion.div>
 
