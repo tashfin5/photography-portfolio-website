@@ -17,14 +17,18 @@ export default function Footer() {
     <footer className="w-full py-8 border-t border-white/5 mt-auto">
       <div className="max-w-[1600px] mx-auto px-6 md:px-12 flex justify-center items-center gap-8">
         <a 
-          href="#" 
+          href="https://www.facebook.com/tonmoypaul01" 
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-white/40 hover:text-brand-200 transition-colors duration-300 hover:scale-110 transform"
           aria-label="Facebook"
         >
           <FacebookIcon className="w-6 h-6" />
         </a>
         <a 
-          href="#" 
+          href="https://www.instagram.com/tonmoyphoto.graphy/" 
+          target="_blank"
+          rel="noopener noreferrer"
           className="text-white/40 hover:text-brand-200 transition-colors duration-300 hover:scale-110 transform"
           aria-label="Instagram"
         >

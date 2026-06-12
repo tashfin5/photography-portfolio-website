@@ -121,13 +121,13 @@ export default function ContactPage() {
                 </div>
               </a>
 
-              <a href="tel:+919871001434" className="flex items-start gap-6 group/link">
+              <a href="tel:01833-375833" className="flex items-start gap-6 group/link">
                 <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover/link:bg-brand-200/20 group-hover/link:border-brand-200/50 transition-colors">
                   <Phone className="w-5 h-5 text-brand-200" />
                 </div>
                 <div>
                   <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-2">Phone</p>
-                  <p className="text-2xl md:text-3xl font-light text-white group-hover/link:text-brand-200 transition-colors">+91 9871001434</p>
+                  <p className="text-2xl md:text-3xl font-light text-white group-hover/link:text-brand-200 transition-colors">01833-375833</p>
                 </div>
               </a>
 
@@ -137,7 +137,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-2">Location</p>
-                  <p className="text-xl md:text-2xl font-light text-white">Global / Based in NY</p>
+                  <p className="text-xl md:text-2xl font-light text-white">Tanti Bazar, Dhaka, Bangladesh</p>
                 </div>
               </div>
 
@@ -145,13 +145,13 @@ export default function ContactPage() {
                 <p className="text-sm font-light tracking-widest text-white/50 uppercase">Follow</p>
                 <div className="flex items-center gap-8">
                   <Magnetic>
-                    <a href="#" className="flex items-center gap-3 text-white hover:text-brand-200 transition-colors group/social">
+                    <a href="https://www.facebook.com/tonmoypaul01" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white hover:text-brand-200 transition-colors group/social">
                       <span className="font-medium tracking-wide">Facebook</span>
                       <FacebookIcon className="w-6 h-6 group-hover/social:scale-110 transition-transform" />
                     </a>
                   </Magnetic>
                   <Magnetic>
-                    <a href="#" className="flex items-center gap-3 text-white hover:text-brand-200 transition-colors group/social">
+                    <a href="https://www.instagram.com/tonmoyphoto.graphy/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-white hover:text-brand-200 transition-colors group/social">
                       <span className="font-medium tracking-wide">Instagram</span>
                       <InstagramIcon className="w-6 h-6 group-hover/social:scale-110 transition-transform" />
                     </a>
