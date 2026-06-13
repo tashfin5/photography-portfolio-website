@@ -66,7 +66,7 @@ export default function ContactPage() {
             style={{ perspective: 1000 }}
             className="w-full text-center flex flex-col items-center px-4"
           >
-            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] 2xl:text-[160px] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-[#E89D42]/90 to-[#E89D42]/20 mb-8 flex flex-col items-center justify-center overflow-y-hidden py-4">
+            <h1 className="text-5xl sm:text-6xl md:text-[8rem] lg:text-[10vw] 2xl:text-[160px] font-black uppercase tracking-tighter leading-[0.85] text-transparent bg-clip-text bg-gradient-to-br from-[#FFE8A1] to-[#E89D42] drop-shadow-[0_10px_30px_rgba(0,0,0,0.4)] mb-8 flex flex-col items-center justify-center overflow-y-hidden py-4">
               <div className="flex overflow-y-hidden">
                 {"LET'S".split("").map((char, index) => (
                   <motion.span
@@ -111,13 +111,13 @@ export default function ContactPage() {
             <div className="absolute -inset-24 bg-gradient-to-r from-brand-200/20 to-brand-400/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 pointer-events-none" />
 
             <div className="relative z-10 space-y-12">
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=hello@example.com" target="_blank" rel="noopener noreferrer" className="flex items-start gap-6 group/link">
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=itstonmoyphotography@gmail.com" target="_blank" rel="noopener noreferrer" className="flex items-start gap-6 group/link">
                 <div className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover/link:bg-brand-200/20 group-hover/link:border-brand-200/50 transition-colors">
                   <Mail className="w-5 h-5 text-brand-200" />
                 </div>
                 <div>
                   <p className="text-xs tracking-[0.2em] text-white/40 uppercase mb-2">Email</p>
-                  <p className="text-2xl md:text-3xl font-light text-white group-hover/link:text-brand-200 transition-colors">hello@example.com</p>
+                  <p className="text-2xl md:text-3xl font-light text-white group-hover/link:text-brand-200 transition-colors">itstonmoyphotography@gmail.com</p>
                 </div>
               </a>
 

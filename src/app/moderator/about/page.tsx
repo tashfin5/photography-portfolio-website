@@ -211,7 +211,7 @@ export default function EditAboutPage() {
                   type="email" 
                   value={emailAddress} 
                   onChange={e => setEmailAddress(e.target.value)}
-                  placeholder="hello@example.com"
+                  placeholder="itstonmoyphotography@gmail.com"
                   className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-brand-200 outline-none transition-colors"
                 />
               </div>
