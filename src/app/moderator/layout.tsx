@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { LogOut } from "lucide-react";
+import { LogOut, Globe } from "lucide-react";
 
 export default function ModeratorLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -14,9 +14,14 @@ export default function ModeratorLayout({ children }: { children: React.ReactNod
               About Page
             </Link>
           </div>
-          <Link href="/api/auth/logout" prefetch={false} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-sm">
-            <LogOut className="w-4 h-4" /> Logout
-          </Link>
+          <div className="flex items-center gap-6">
+            <Link href="/" target="_blank" className="flex items-center gap-2 text-brand-200/70 hover:text-brand-200 transition-colors text-sm font-medium tracking-wider uppercase">
+              <Globe className="w-4 h-4" /> View Site
+            </Link>
+            <Link href="/api/auth/logout" prefetch={false} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors text-sm uppercase tracking-wider font-medium">
+              <LogOut className="w-4 h-4" /> Logout
+            </Link>
+          </div>
         </div>
       </nav>
       <main className="flex-1">
