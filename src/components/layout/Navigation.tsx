@@ -63,6 +63,17 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { 
+      document.body.style.overflow = ''; 
+    };
+  }, [mobileMenuOpen]);
+
   const handleNav = (e: React.MouseEvent<HTMLAnchorElement>, slug: string | null, isContact = false) => {
     e.preventDefault();
     setPendingSlug(isContact ? 'contact' : (slug || 'all'));
@@ -107,7 +118,7 @@ export default function Navigation() {
               onClick={(e) => handleNav(e, null)}
               className={cn(
                 "text-sm font-medium transition-colors relative py-1 flex items-center justify-center whitespace-nowrap",
-                isAllActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
+                isAllActive ? "text-white drop-shadow-md" : "text-white/70 hover:text-white hover-target"
               )}
             >
               <span className={cn("transition-opacity duration-200", isPending && pendingSlug === 'all' ? "opacity-0" : "opacity-100")}>
@@ -118,7 +129,7 @@ export default function Navigation() {
                   <Loader2 className="w-4 h-4 animate-spin text-brand-200" />
                 </div>
               )}
-              {isAllActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
+              {isAllActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-white drop-shadow-md" />}
             </a>
 
             {categories.map((cat) => {
@@ -130,7 +141,7 @@ export default function Navigation() {
                   onClick={(e) => handleNav(e, cat.slug)}
                   className={cn(
                     "text-sm font-medium transition-colors relative py-1 flex items-center justify-center whitespace-nowrap",
-                    isActive ? "text-brand-200" : "text-white/70 hover:text-white hover-target"
+                    isActive ? "text-white drop-shadow-md" : "text-white/70 hover:text-white hover-target"
                   )}
                 >
                   <span className={cn("transition-opacity duration-200", isPending && pendingSlug === cat.slug ? "opacity-0" : "opacity-100")}>
@@ -141,7 +152,7 @@ export default function Navigation() {
                       <Loader2 className="w-4 h-4 animate-spin text-brand-200" />
                     </div>
                   )}
-                  {isActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-brand-200" />}
+                  {isActive && <span className="absolute -bottom-1 left-0 w-full h-[2px] bg-white drop-shadow-md" />}
                 </a>
               );
             })}
@@ -150,10 +161,10 @@ export default function Navigation() {
 
             <div className="relative group flex items-center h-full">
               <button
-                className="text-sm font-medium transition-colors relative py-4 px-3 flex items-center justify-center whitespace-nowrap text-transparent bg-clip-text bg-gradient-to-r from-brand-200 to-brand-400 hover:opacity-80 hover-target"
+                className="text-sm font-medium transition-colors relative py-4 px-3 flex items-center justify-center whitespace-nowrap text-white drop-shadow-md hover:opacity-80 hover-target"
               >
                 About
-                <svg className="w-3 h-3 ml-1 text-brand-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                <svg className="w-3 h-3 ml-1 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
               </button>
 
               {/* Dropdown Menu Wrapper (pt-4 creates the visual gap without breaking hover) */}
@@ -211,6 +222,7 @@ export default function Navigation() {
             animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
             exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+            data-lenis-prevent="true"
             className="fixed inset-0 z-40 bg-dark-100/98 backdrop-blur-3xl flex flex-col px-8 pt-32 pb-12 overflow-y-auto"
           >
             <div className="w-full max-w-sm mx-auto space-y-8 my-auto">

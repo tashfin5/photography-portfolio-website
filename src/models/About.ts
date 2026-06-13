@@ -7,6 +7,9 @@ export interface IAbout extends Document {
   aboutText: string;
   photoUrl: string;
   photoPublicId: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  emailAddress: string;
   updatedAt: Date;
 }
 
@@ -17,6 +20,9 @@ const AboutSchema = new mongoose.Schema({
   aboutText: { type: String, default: "I believe that every image should tell a story. With over a decade of experience, I bring a unique cinematic perspective to every shoot. My passion lies in capturing authentic moments and translating them into timeless visual art." },
   photoUrl: { type: String, default: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1200&auto=format&fit=crop" },
   photoPublicId: { type: String, default: "" },
+  facebookUrl: { type: String, default: "" },
+  instagramUrl: { type: String, default: "" },
+  emailAddress: { type: String, default: "" },
   updatedAt: { type: Date, default: Date.now },
 });
 

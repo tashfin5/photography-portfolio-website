@@ -36,6 +36,9 @@ export async function PUT(req: Request) {
     const nameSize = formData.get("nameSize") as string;
     const profileText = formData.get("profileText") as string;
     const aboutText = formData.get("aboutText") as string;
+    const facebookUrl = formData.get("facebookUrl") as string;
+    const instagramUrl = formData.get("instagramUrl") as string;
+    const emailAddress = formData.get("emailAddress") as string;
     const file = formData.get("file") as File | null;
 
     const updates: any = {
@@ -43,6 +46,9 @@ export async function PUT(req: Request) {
       nameSize: nameSize || about.nameSize,
       profileText: profileText || about.profileText,
       aboutText: aboutText || about.aboutText,
+      facebookUrl: facebookUrl !== null ? facebookUrl : about.facebookUrl,
+      instagramUrl: instagramUrl !== null ? instagramUrl : about.instagramUrl,
+      emailAddress: emailAddress !== null ? emailAddress : about.emailAddress,
       updatedAt: new Date()
     };
 

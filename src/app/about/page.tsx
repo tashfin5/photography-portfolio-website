@@ -55,9 +55,15 @@ export default async function AboutPage() {
             </div>
 
             <div className="absolute bottom-12 lg:bottom-20 left-12 lg:left-20 right-12 lg:right-20 flex gap-6 text-[#E89D42]/60 items-center">
-              <a href="#" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Instagram</a>
-              <a href="#" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Facebook</a>
-              <a href="/contact" className="hover:text-[#E89D42] transition-colors ml-auto"><Mail className="w-5 h-5" /></a>
+              {data.instagramUrl && (
+                <a href={data.instagramUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Instagram</a>
+              )}
+              {data.facebookUrl && (
+                <a href={data.facebookUrl} target="_blank" rel="noopener noreferrer" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Facebook</a>
+              )}
+              <a href={data.emailAddress ? `mailto:${data.emailAddress}` : "/contact"} className="hover:text-[#E89D42] transition-colors ml-auto">
+                <Mail className="w-5 h-5" />
+              </a>
             </div>
           </div>
 

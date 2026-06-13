@@ -16,6 +16,9 @@ export default function EditAboutPage() {
   const [nameSize, setNameSize] = useState("");
   const [profileText, setProfileText] = useState("");
   const [aboutText, setAboutText] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [instagramUrl, setInstagramUrl] = useState("");
+  const [emailAddress, setEmailAddress] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
 
   const sizeOptions = [
@@ -39,6 +42,9 @@ export default function EditAboutPage() {
       setNameSize(about.nameSize || sizeOptions[1].value);
       setProfileText(about.profileText || "");
       setAboutText(about.aboutText || "");
+      setFacebookUrl(about.facebookUrl || "");
+      setInstagramUrl(about.instagramUrl || "");
+      setEmailAddress(about.emailAddress || "");
       setPreviewUrl(about.photoUrl || "");
     }
     setIsLoading(false);
@@ -82,6 +88,9 @@ export default function EditAboutPage() {
     formData.append("nameSize", nameSize);
     formData.append("profileText", profileText);
     formData.append("aboutText", aboutText);
+    formData.append("facebookUrl", facebookUrl);
+    formData.append("instagramUrl", instagramUrl);
+    formData.append("emailAddress", emailAddress);
     if (finalFile) {
       formData.append("file", finalFile, finalFile.name || "image.jpg");
     }
@@ -172,6 +181,40 @@ export default function EditAboutPage() {
                 className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-brand-200 outline-none transition-colors resize-none"
                 required
               />
+            </div>
+
+            {/* Social Links */}
+            <div className="space-y-4 pt-4 border-t border-white/10">
+              <div className="space-y-2">
+                <label className="text-xs text-brand-200 tracking-widest uppercase font-bold">Instagram URL</label>
+                <input 
+                  type="url" 
+                  value={instagramUrl} 
+                  onChange={e => setInstagramUrl(e.target.value)}
+                  placeholder="https://instagram.com/..."
+                  className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-brand-200 outline-none transition-colors"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs text-brand-200 tracking-widest uppercase font-bold">Facebook URL</label>
+                <input 
+                  type="url" 
+                  value={facebookUrl} 
+                  onChange={e => setFacebookUrl(e.target.value)}
+                  placeholder="https://facebook.com/..."
+                  className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-brand-200 outline-none transition-colors"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-xs text-brand-200 tracking-widest uppercase font-bold">Email Address</label>
+                <input 
+                  type="email" 
+                  value={emailAddress} 
+                  onChange={e => setEmailAddress(e.target.value)}
+                  placeholder="hello@example.com"
+                  className="w-full bg-black/20 border border-white/10 rounded-lg px-4 py-3 text-white focus:border-brand-200 outline-none transition-colors"
+                />
+              </div>
             </div>
           </div>
 
