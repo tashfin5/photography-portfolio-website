@@ -39,7 +39,7 @@ export default async function AboutPage() {
       <Suspense fallback={<div className="h-24" />}>
         <Navigation />
       </Suspense>
-      <main className="min-h-screen w-full pt-48 lg:pt-60 pb-12 px-6 md:px-8 flex items-center justify-center overflow-hidden">
+      <main className="min-h-screen w-full pt-32 lg:pt-36 pb-24 lg:pb-32 px-6 md:px-8 flex items-center justify-center overflow-hidden">
 
         {/* 3-Column Split Container */}
         <div className="w-full max-w-[1800px] min-h-[800px] lg:min-h-0 lg:h-[85vh] flex flex-col lg:flex-row shadow-2xl rounded-2xl overflow-hidden bg-black/20 backdrop-blur-md ring-1 ring-white/10">
@@ -59,7 +59,7 @@ export default async function AboutPage() {
             <div className="absolute bottom-12 lg:bottom-20 left-12 lg:left-20 right-12 lg:right-20 flex gap-6 text-[#E89D42]/60 items-center">
               <a href={data.instagramUrl || "#"} target="_blank" rel="noopener noreferrer" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Instagram</a>
               <a href={data.facebookUrl || "#"} target="_blank" rel="noopener noreferrer" className="text-xs font-bold tracking-[0.2em] hover:text-[#E89D42] transition-colors uppercase">Facebook</a>
-              <a href={data.emailAddress ? `mailto:${data.emailAddress}` : "/contact"} className="hover:text-[#E89D42] transition-colors ml-auto">
+              <a href={data.emailAddress ? `https://mail.google.com/mail/?view=cm&fs=1&to=${data.emailAddress}` : "/contact"} target="_blank" rel="noopener noreferrer" className="hover:text-[#E89D42] transition-colors ml-auto">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
