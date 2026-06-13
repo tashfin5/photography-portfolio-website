@@ -338,10 +338,7 @@ export default function ModeratorDashboard() {
   return (
     <div className="container mx-auto px-6 py-12 max-w-[1600px]">
       <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4">
-        <h1 className="text-3xl font-bold tracking-widest uppercase text-white">Moderator Dashboard</h1>
-        <button onClick={handleLogout} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors">
-          <LogOut className="w-5 h-5" /> Logout
-        </button>
+        <h1 className="text-3xl font-bold tracking-widest uppercase text-white">Manage Gallery</h1>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8 items-start">

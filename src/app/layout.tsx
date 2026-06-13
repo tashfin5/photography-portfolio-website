@@ -22,10 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${syne.variable} dark antialiased`} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-background text-foreground selection:bg-brand-200/30 selection:text-white">
-        {/* Dynamic Global Background - Adjusted to have a slightly shinier orange glow */}
-        <div className="fixed -inset-[200px] z-[-1] pointer-events-none blur-[120px]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,120,0,0.15)_0%,rgba(10,10,10,1)_80%)]"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(255,100,0,0.12)_0%,rgba(10,10,10,0)_60%)]"></div>
+        {/* Dynamic Global Background Image */}
+        <div className="fixed inset-0 z-[-1] pointer-events-none">
+          <img src="/assets/Background.png" alt="Background" className="w-full h-full object-cover" />
         </div>
         <Preloader />
         {children}

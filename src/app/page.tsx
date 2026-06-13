@@ -36,16 +36,29 @@ export default async function Home({
 
   return (
     <SmoothScroll>
-      
-      <Suspense fallback={<div className="h-24" />}>
-        <Navigation />
-      </Suspense>
-      
+      {!currentCategory && photos.some((p: any) => p.isFeatured) ? (
+        <div className="absolute top-0 left-0 w-full md:h-[300vh] z-[60] pointer-events-none">
+          <div className="md:sticky md:top-0 w-full h-0 pointer-events-auto">
+            <Suspense fallback={<div className="h-24" />}>
+              <Navigation />
+            </Suspense>
+          </div>
+        </div>
+      ) : (
+        <div className="absolute top-0 left-0 w-full z-[60] pointer-events-none">
+          <div className="w-full h-0 pointer-events-auto">
+            <Suspense fallback={<div className="h-24" />}>
+              <Navigation />
+            </Suspense>
+          </div>
+        </div>
+      )}
+
       {!currentCategory && photos.some((p: any) => p.isFeatured) && (
         <FeaturedHorizontal photos={photos} />
       )}
       
-      <main className="w-full min-h-screen pt-24 lg:pt-32 px-6 md:px-12 max-w-[1600px] mx-auto">
+      <main className="w-full min-h-screen pt-36 lg:pt-48 px-6 md:px-12 max-w-[1600px] mx-auto">
         <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-pulse w-10 h-10 bg-brand-200 rounded-full" /></div>}>
           <Gallery photos={photos} />
         </Suspense>

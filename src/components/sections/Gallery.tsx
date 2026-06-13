@@ -162,9 +162,13 @@ export default function Gallery({ photos }: { photos: any[] }) {
             className="fixed inset-0 z-[99999] flex items-center justify-center p-4 md:p-12 cursor-zoom-out overflow-hidden"
           >
             {/* Immersive Background */}
-            <div className="absolute inset-0 bg-[#0a0a0a] pointer-events-none overflow-hidden">
-              <div className="absolute -inset-[200px] bg-[radial-gradient(ellipse_at_top,rgba(255,120,0,0.25)_0%,rgba(10,10,10,1)_80%)] blur-[120px]"></div>
-              <div className="absolute -inset-[200px] bg-[radial-gradient(circle_at_bottom_right,rgba(255,100,0,0.15)_0%,rgba(10,10,10,0)_60%)] blur-[120px]"></div>
+            <div className="absolute inset-0 pointer-events-none overflow-hidden">
+              <img 
+                src="/assets/Background.png" 
+                alt="Background" 
+                className="absolute inset-0 w-full h-full object-cover blur-[30px] scale-110 opacity-100" 
+              />
+              <div className="absolute inset-0 bg-black/30" />
             </div>
 
             <button 
@@ -191,13 +195,13 @@ export default function Gallery({ photos }: { photos: any[] }) {
                 <img
                   src={selectedPhoto.imageUrl}
                   alt=""
-                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[120px] opacity-70 scale-110 saturate-150 translate-x-[15vw]"
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[120px] opacity-70 scale-110 saturate-150 translate-x-[8vw]"
                 />
                 {/* Tighter, brighter glass reflection (Right Side Photo Reflection) */}
                 <img
                   src={selectedPhoto.imageUrl}
                   alt=""
-                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[50px] opacity-90 scale-105 saturate-200 translate-x-[10vw]"
+                  className="absolute max-w-[90vw] max-h-[85vh] object-contain blur-[50px] opacity-90 scale-105 saturate-200 translate-x-[4vw]"
                 />
               </div>
 
