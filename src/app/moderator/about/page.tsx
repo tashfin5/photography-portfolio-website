@@ -73,7 +73,7 @@ export default function EditAboutPage() {
     if (uploadFile && uploadFile.size > 2 * 1024 * 1024) {
       try {
         const options = {
-          maxSizeMB: 8, // Safely under Cloudinary 10MB limit
+          maxSizeMB: 2.5, // Safely under Vercel 4.5MB serverless limit
           maxWidthOrHeight: 3000,
           useWebWorker: true,
         };
