@@ -10,7 +10,7 @@ const syne = Syne({
 });
 
 export const metadata: Metadata = {
-  title: "Cinematic Photography Portfolio",
+  title: "Tonmoy Photography",
   description: "Ultra-premium photography portfolio featuring cinematic imagery and dramatic styling.",
 };
 
